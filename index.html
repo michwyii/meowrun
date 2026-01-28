@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Mini Runner</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="hud">
+    <div>
+      <img src="images/bread.PNG" height="15px">: <span id="rewardsCount">0</span> &nbsp;&nbsp;&nbsp;
+      Score: <span id="score">0</span> 
+    </div>
+    <button id="restart" hidden>Restart</button>
+  </div>
+
+  <div id="menu" class="menu">
+    <h2>Choose a mode</h2>
+  
+    <div class="modeGrid">
+      <button class="modeBtn" data-mode="classic">Classic</button>
+      <button class="modeBtn" data-mode="halloween">Halloween</button>
+      <button class="modeBtn" data-mode="delivery">Delivery</button>
+      <button class="modeBtn" data-mode="baseball">Baseball</button>
+      <button class="modeBtn" data-mode="cafe">Cafe</button>
+      <button class="modeBtn" data-mode="angel">Angel</button>
+    </div>
+  
+    <p class="hint">Tip: You can still press Restart to replay with the same mode.</p>
+  </div>
+  
+  <div class="hud">
+    <button id="restart" hidden>Restart</button>
+    <button id="changeMode">Change Mode</button>
+
+  </div>
+  
+
+  <div id="game">
+    <div id="player">
+      <img id="catImg" src="images/side.PNG" alt="cat character">
+    </div>    
+    <div id="obstacles">
+      <div id="hitbox" class="hitbox"></div>
+      <img src="images/tree.PNG" alt="">
+    </div>
+    <div id="rewards"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
