@@ -5,6 +5,7 @@ const obstaclesLayer = document.getElementById("obstacles"); // requires <div id
 const scoreEl = document.getElementById("score");
 const restartBtn = document.getElementById("restart");
 const catImg = document.getElementById("catImg");
+// grabs elements from HTML
 
 // MODE MENU (requires #menu and .modeBtn buttons)
 const menu = document.getElementById("menu");
@@ -16,8 +17,6 @@ const rewardsCountEl = document.getElementById("rewardsCount");  // requires <sp
 
 const changeModeBtn = document.getElementById("changeMode");
 
-// ----- MODES (6) -----
-// IMPORTANT: Change these paths to your real files.
 const MODES = {
   classic: {
     bg: "images/grass2.jpeg",
@@ -103,39 +102,46 @@ function applyMode(modeName) {
   for (const o of obstacles) {
     if (o.key) o.img.src = m.obstacles[o.key];
   }
+  if (currentMode === "angel") {
+    rewardMinY = 80;
+    rewardMaxY = 250;
+  } else {
+    rewardMinY = 80;   // normal modes
+    rewardMaxY = 130;
+  }
 }
 
 // ----- Game state -----
 let running = true;
 let score = 0;
-
-// >>> REWARDS: state
 let rewardsCount = 0;
 
 // ----- Physics -----
 let y = 18;            // player's bottom (px)
 let vy = 0;            // vertical velocity (px/s)
-const groundY = 18;
+const groundY = 18; // dist from ground
 const jumpV = 550;     // jump impulse (px/s)
 const gravity = 1600;  // (px/s^2)
 
 // ----- Obstacles (multiple + repeating sequence) -----
 let obsSpeed = 360; // px/s
 
-// Keep bottoms here (sprites come from MODES now)
 const types = {
-  tree:     { bottom: 18 },
-  mountain: { bottom: 18 },
-  rock:     { bottom: 18 }
+  tree:     { bottom: 18, angelBottom: 40 +
+    Math.random() * (250 - 40) },
+  mountain: { bottom: 18, angelBottom: 40 +
+    Math.random() * (250 - 40) } ,
+  rock:     { bottom: 18, angelBottom: 40 +
+    Math.random() * (250 - 40) } ,
 };
 
 const sequence = ["tree", "mountain", "tree", "rock"];
-let seqIndex = 0;
+let seqIndex = 0; //tracks which obstacle comes next
 
 function nextTypeKey() {
   const key = sequence[seqIndex];
   seqIndex = (seqIndex + 1) % sequence.length;
-  return key;
+  return key; //% makes it loop back to 0
 }
 
 const obstacles = []; // each: { el, hitbox, img, x, key }
@@ -145,9 +151,8 @@ const baseGap = 400;
 // >>> REWARDS: config + list
 const rewards = []; // each: { el, img, x }
 let rewardSpawnTimer = 0;
-const rewardSpawnEvery = 0.6; // seconds (tune)
-const rewardMinY = 80;       // px above bottom
-const rewardMaxY = 130;
+const rewardSpawnEvery = 0.6; // seconds (tune)density of reward
+
 
 // ----- Timing -----
 let lastTime = performance.now();
@@ -156,7 +161,11 @@ function clamp(n, a, b) { return Math.max(a, Math.min(b, n)); }
 // ----- Input -----
 function jump() {
   if (!running) return;
-  if (y <= groundY + 0.5) vy = jumpV;
+  if (currentMode === "angel") {
+    vy = jumpV;
+  } else {
+    if (y <= groundY + 0.5) vy = jumpV;
+  }
 }
 
 window.addEventListener("keydown", (e) => {
@@ -207,8 +216,11 @@ function applyType(o, key) {
   // sprite depends on mode
   o.img.src = MODES[currentMode].obstacles[key];
 
-  // bottom depends on type
-  o.el.style.bottom = `${types[key].bottom}px`;
+  const b = (currentMode === "angel" && types[key].angelBottom != null)
+  ? types[key].angelBottom
+  : types[key].bottom;
+
+o.el.style.bottom = `${b}px`;
 }
 
 function spawn(o, startX) {
