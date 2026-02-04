@@ -127,12 +127,12 @@ const gravity = 1600;  // (px/s^2)
 let obsSpeed = 360; // px/s
 
 const types = {
-  tree:     { bottom: 18, angelBottom: 40 +
-    Math.random() * (250 - 40) },
-  mountain: { bottom: 18, angelBottom: 40 +
-    Math.random() * (250 - 40) } ,
-  rock:     { bottom: 18, angelBottom: 40 +
-    Math.random() * (250 - 40) } ,
+  tree:     { bottom: 18, angelBottom: 23 +
+    Math.random() * (250 - 23) },
+  mountain: { bottom: 18, angelBottom: 23 +
+    Math.random() * (250 - 23) } ,
+  rock:     { bottom: 18, angelBottom: 23 +
+    Math.random() * (250 - 23) } ,
 };
 
 const sequence = ["tree", "mountain", "tree", "rock"];
