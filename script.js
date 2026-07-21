@@ -116,12 +116,22 @@ let running = true;
 let score = 0;
 let rewardsCount = 0;
 
-// ----- Physics -----
-let y = 18;            // player's bottom (px)
-let vy = 0;            // vertical velocity (px/s)
-const groundY = 18; // dist from ground
-const jumpV = 550;     // jump impulse (px/s)
-const gravity = 1600;  // (px/s^2)
+if (currentMode === "angel") {
+  let y = 18;            // player's bottom (px)
+  let vy = 0;            // vertical velocity (px/s)
+  const groundY = 18; // dist from ground
+  const jumpV = 200;     // jump impulse (px/s)
+  const gravity = 600;  // (px/s^2)
+  } 
+else {
+    let y = 18;            // player's bottom (px)
+  let vy = 0;            // vertical velocity (px/s)
+  const groundY = 18; // dist from ground
+  const jumpV = 550;     // jump impulse (px/s)
+  const gravity = 1600;  // (px/s^2)
+
+  }
+
 
 // ----- Obstacles (multiple + repeating sequence) -----
 let obsSpeed = 360; // px/s
